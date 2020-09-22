@@ -59,7 +59,7 @@ git clone git@github.com:mowocc/laravel_admin_init.git
 # laravel/sanctum Api接口验证，Cookie作用域
 SANCTUM_STATEFUL_DOMAINS=admin.init.com
 
-# 手动创建数据
+# 手动创建数据库
 数据库名：init_admin
 字符集：utf8mb4
 排序规则：utf8mb4_unicode_ci
