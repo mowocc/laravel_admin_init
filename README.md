@@ -11,6 +11,37 @@
 
 本人在工作中经历了多个管理后台，每次开发新管理后台时，都会做大量重复工作，于是这个项目应运而生，专注实现一些基础的功能，开发新项目时只需关注具体业务逻辑，或少许修改就可以开始工作。项目定位为 `laravel-admin-init`，而不是 `laravel-admin-demo`。
 
+# 功能介绍
+>* 用户管理
+>* 权限管理
+>* 菜单管理
+>* 日志管理
+>* ......
+
+详细功能逻辑后续更新...
+
+# 使用技术
+PHP扩展：
+>* `laravel/sanctum` Api接口验证
+>* `spatie/laravel-permission` 角色权限
+>* `spatie/laravel-activitylog` 操作日志
+>* `torann/geoip` IP定位
+>* `jenssegers/agent` 设备信息
+>* `caouecs/laravel-lang` 语言包
+
+Vue插件：
+>* `fortawesome` 字体图标
+>* `element-ui` UI框架
+>* `vuex` 全局状态
+>* `vue-router` 前端路由
+>* `vue-i18n` 多语言
+>* `vue-cookie` Cookie管理
+>* `vue-simplebar` 滚动条
+>* `vue-progressbar` 进度条
+>* `vue-json-views` Json显示
+>* `moment-timezone` 时间处理
+
+
 # 安装体验
 
 部署代码
@@ -62,32 +93,8 @@ php artisan db:seed
 密码：aaaaaaaa
 ```
 
-# 功能介绍
->* 用户管理
->* 权限管理
->* 菜单管理
->* 日志管理
->* ......
 
-详细功能逻辑后续更新...
-
-# 使用技术
-PHP扩展：
->* `laravel/sanctum` Api接口验证
->* `spatie/laravel-permission` 角色权限
->* `spatie/laravel-activitylog` 操作日志
->* `torann/geoip` IP定位
->* `jenssegers/agent` 设备信息
->* `caouecs/laravel-lang` 语言包
-
-Vue插件：
->* `fortawesome` 字体图标
->* `element-ui` UI框架
->* `vuex` 全局状态
->* `vue-router` 前端路由
->* `vue-i18n` 多语言
->* `vue-cookie` Cookie管理
->* `vue-simplebar` 滚动条
->* `vue-progressbar` 进度条
->* `vue-json-views` Json显示
->* `moment-timezone` 时间处理
+注意
+```shell
+因为中控子节点后台，及对应数据库没有创建，所以【代理】模块无法访问。
+```
