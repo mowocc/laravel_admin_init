@@ -14,9 +14,9 @@
                             <component-page-timestamp :timestamp="data.created"></component-page-timestamp>
                         </el-form-item>
                     </div>
-                    <!--User-Agency-->
+                    <!--User-Agent-->
                     <div class="pt-4 pl-4 pr-4 pb-3">
-                        <el-divider>User-Agency</el-divider>
+                        <el-divider>User-Agent</el-divider>
                     </div>
                     <el-form-item :label="$t('system.log.login.languages')">{{ data.languages }}</el-form-item>
                     <el-form-item :label="$t('system.log.login.device')">
