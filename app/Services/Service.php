@@ -52,19 +52,15 @@ class Service
      *
      * @param \Illuminate\Http\Request $request            
      * @param string $key            
-     * @param array $where            
+     * @param \Illuminate\Database\Eloquent\Builder $query            
      * @param string $column            
      * @param string $operator            
      * @return $this
      */
-    protected function makeWhereParam($request, $key, &$where, $column, $operator = '=')
+    protected function makeWhereParam($request, $key, $query, $column, $operator = '=')
     {
         if ($this->isValidParam($request, $key)) {
-            array_push($where, [
-                $column,
-                $operator,
-                $request->input($key)
-            ]);
+            $query->where($column, $operator, $request->input($key));
         }
         return $this;
     }
@@ -74,39 +70,34 @@ class Service
      *
      * @param \Illuminate\Http\Request $request            
      * @param string $key            
-     * @param array $where            
+     * @param \Illuminate\Database\Eloquent\Builder $query            
      * @param string $column            
      * @param boolean $isLeft            
      * @return $this
      */
-    protected function makeWhereParamLike($request, $key, &$where, $column, $isLeft = true)
+    protected function makeWhereParamLike($request, $key, $query, $column, $isLeft = true)
     {
         if ($this->isValidParam($request, $key)) {
-            array_push($where, [
-                $column,
-                'like',
-                ($isLeft ? '' : '%') . $request->input($key) . '%'
-            ]);
+            $query->where($column, 'like', ($isLeft ? '' : '%') . $request->input($key) . '%');
         }
         return $this;
     }
 
     /**
-     * 制作查询参数【直接赋值】
+     * 制作查询参数【软删除】
      *
-     * @param array $where            
-     * @param string $column            
-     * @param string $value            
-     * @param string $operator            
+     * @param \Illuminate\Http\Request $request            
+     * @param \Illuminate\Database\Eloquent\Builder $query            
      * @return $this
      */
-    protected function makeWhereValue(&$where, $column, $value, $operator = '=')
+    protected function makeWhereDeleted($request, $query)
     {
-        array_push($where, [
-            $column,
-            $operator,
-            $value
-        ]);
+        // 软删除筛选
+        if (! $this->isValidParam($request, 'deleted')) {
+            $query->withTrashed();
+        } elseif ((boolean) $request->input('deleted')) {
+            $query->onlyTrashed();
+        }
         return $this;
     }
 }

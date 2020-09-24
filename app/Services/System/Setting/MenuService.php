@@ -4,7 +4,6 @@ namespace App\Services\System\Setting;
 use App\Services\Service;
 use App\Mappers\System\Setting\MenuMapper;
 use App\Models\Admin\Config\Menu;
-use Illuminate\Support\Str;
 
 class MenuService extends Service
 {
@@ -17,18 +16,13 @@ class MenuService extends Service
      */
     public function getList($request)
     {
-        $where = [];
         $query = Menu::query();
 
         // 软删除筛选
-        if (! $this->isValidParam($request, 'deleted')) {
-            $query->withTrashed();
-        } elseif ((boolean) $request->input('deleted')) {
-            $query->onlyTrashed();
-        }
+        $this->makeWhereDeleted($request, $query);
 
         // 查询数据
-        return $query->where($where)
+        return $query
             ->orderBy('parent_id', 'asc')
             ->orderBy('sort', 'asc')
             ->get();

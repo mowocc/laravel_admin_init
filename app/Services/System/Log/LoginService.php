@@ -15,22 +15,20 @@ class LoginService extends Service
      */
     public function getList($request)
     {
-        $where = [];
         $query = UserLoginLog::query();
 
         // 搜索
         if (ctype_digit($request->input('keyword'))) {
             // 操作人【ID】
-            $this->makeWhereParam($request, 'keyword', $where, 'user_id');
+            $this->makeWhereParam($request, 'keyword', $query, 'user_id');
         }
         // 默认值
-        $this->makeWhereParam($request, 'default', $where, 'default');
+        $this->makeWhereParam($request, 'default', $query, 'default');
         
         // 数据条数
-        $total = (clone $query)->where($where)->count();
+        $total = (clone $query)->count();
         // 查询数据
         $collection = $query->with('user:id,name,email')
-            ->where($where)
             ->orderBy('created', $request->get('order', UserLoginLog::ORDER_DESC))
             ->offset(($this->getPage($request) - 1) * $this->getPageSize($request))
             ->limit($this->getPageSize($request))

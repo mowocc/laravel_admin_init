@@ -16,36 +16,34 @@ class ActivityService extends Service
      */
     public function getList($request)
     {
-        $where = [];
         $query = Activity::query();
         
         $keyword = $request->input('keyword');
         // 搜索
         if ($keyword === 'null') {
             // 操作人【null】
-            $query = $query->whereNull('causer_id');
+            $query->whereNull('causer_id');
         } elseif (ctype_digit($keyword)) {
             // 操作人【ID】
-            $this->makeWhereParam($request, 'keyword', $where, 'causer_id');
+            $this->makeWhereParam($request, 'keyword', $query, 'causer_id');
         } elseif (Str::of($keyword)->is('*:*')) {
             // 拆分字符串
             $subject = Str::of($keyword)->explode(':');
             // 操作对象
-            $this->makeWhereValue($where, 'subject_id', $subject->last());
-            $this->makeWhereValue($where, 'subject_type', $subject->first());
+            $query->where('subject_id', $subject->last());
+            $query->where('subject_type', $subject->first());
         } elseif ($this->isValidParam($request, 'keyword')) {
             // 格式错误筛选填充
-            $this->makeWhereValue($where, 'id', 0);
+            $query->where('id', 0);
         }
         
         // 事件
-        $this->makeWhereParam($request, 'description', $where, 'description');
+        $this->makeWhereParam($request, 'description', $query, 'description');
         
         // 数据条数
-        $total = (clone $query)->where($where)->count();
+        $total = (clone $query)->count();
         // 查询数据
         $collection = $query->with('causer:id,name,email')
-            ->where($where)
             ->orderBy('created_at', $request->get('order', Activity::ORDER_DESC))
             ->offset(($this->getPage($request) - 1) * $this->getPageSize($request))
             ->limit($this->getPageSize($request))

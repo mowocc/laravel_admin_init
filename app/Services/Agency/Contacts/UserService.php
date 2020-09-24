@@ -17,25 +17,19 @@ class UserService extends Service
      */
     public function getList($request)
     {
-        $where = [];
         $query = User::query();
         
         // 软删除筛选
-        if (! $this->isValidParam($request, 'deleted')) {
-            $query->withTrashed();
-        } elseif ((boolean) $request->input('deleted')) {
-            $query->onlyTrashed();
-        }
-        
-        // 制作筛选参数
-        $this->makeWhereParam($request, 'org_id', $where, 'org_id')
-            ->makeWhereParamLike($request, 'keyword', $where, 'email');
+        $this->makeWhereDeleted($request, $query);
+        // 平台ID筛选
+        $this->makeWhereParam($request, 'org_id', $query, 'org_id');
+        // 邮箱左搜索
+        $this->makeWhereParamLike($request, 'keyword', $query, 'email');
          
         // 数据条数
-        $total = (clone $query)->where($where)->count();
+        $total = (clone $query)->count();
         // 查询数据
         $collection = $query->with(['org:id,name', 'treeRoles:id,name'])
-            ->where($where)
             ->orderBy($request->get('order_column', 'id'), $request->get('order', User::ORDER_DESC))
             ->offset(($this->getPage($request) - 1) * $this->getPageSize($request))
             ->limit($this->getPageSize($request))

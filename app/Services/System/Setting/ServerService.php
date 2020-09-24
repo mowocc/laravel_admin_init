@@ -16,23 +16,17 @@ class ServerService extends Service
      */
     public function getList($request)
     {
-        $where = [];
         $query = Server::query();
 
         // 软删除筛选
-        if (! $this->isValidParam($request, 'deleted')) {
-            $query->withTrashed();
-        } elseif ((boolean) $request->input('deleted')) {
-            $query->onlyTrashed();
-        }
-
-        // 制作筛选参数
-        $this->makeWhereParamLike($request, 'keyword', $where, 'name');
+        $this->makeWhereDeleted($request, $query);
+        // 名称左搜索
+        $this->makeWhereParamLike($request, 'keyword', $query, 'name');
 
         // 数据条数
-        $total = (clone $query)->where($where)->count();
+        $total = (clone $query)->count();
         // 查询数据
-        $collection = $query->where($where)
+        $collection = $query
             ->orderBy($request->get('order_column', 'id'), $request->get('order', Server::ORDER_DESC))
             ->offset(($this->getPage($request) - 1) * $this->getPageSize($request))
             ->limit($this->getPageSize($request))

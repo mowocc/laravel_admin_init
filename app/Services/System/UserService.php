@@ -18,29 +18,22 @@ class UserService extends Service
      */
     public function getList($request, $exceptSuperAdmin = true)
     {
-        $where = [];
         $query = User::query();
         
         // 排除超级管理员
         if ((boolean) $exceptSuperAdmin) {
-            $where[] = ['is_super_admin', User::$superAdminFalse];
+            $query->where('is_super_admin', User::$superAdminFalse);
         }
         
         // 软删除筛选
-        if (! $this->isValidParam($request, 'deleted')) {
-            $query->withTrashed();
-        } elseif ((boolean) $request->input('deleted')) {
-            $query->onlyTrashed();
-        }
-        
-        // 制作筛选参数
-        $this->makeWhereParamLike($request, 'keyword', $where, 'email');
+        $this->makeWhereDeleted($request, $query);
+        // 邮箱左搜索
+        $this->makeWhereParamLike($request, 'keyword', $query, 'email');
             
         // 数据条数
-        $total = (clone $query)->where($where)->count();
+        $total = (clone $query)->count();
         // 查询数据
         $collection = $query->with(['treeRoles:id,name'])
-            ->where($where)
             ->orderBy($request->get('order_column', 'id'), $request->get('order', User::ORDER_DESC))
             ->offset(($this->getPage($request) - 1) * $this->getPageSize($request))
             ->limit($this->getPageSize($request))
