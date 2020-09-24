@@ -74,7 +74,7 @@
         <el-dialog :title="$t('system.permission.tree.dialog.destroy')" center width="340px" :visible.sync="dialog.visible.destroy">
             <div class="text-center" v-html="$t('confirm.tree-delete', { name: nodeCache.data.name })"></div>
             <div slot="footer">
-                <el-button type="primary" @click="treeNodeDestroy">{{ $t('action.confirm') }}</el-button>
+                <el-button type="danger" @click="treeNodeDestroy">{{ $t('action.confirm') }}</el-button>
                 <el-button @click="dialog.visible.destroy = false">{{ $t('action.cancel') }}</el-button>
             </div>
         </el-dialog>

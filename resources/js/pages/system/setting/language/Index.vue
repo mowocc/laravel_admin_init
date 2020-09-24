@@ -83,7 +83,7 @@
             <div class="text-center" v-html="$t('confirm.language', { status: $t('action.delete') })"></div>
             <div class="text-center text-danger-custom">{{ $t('confirm.delete') }}</div>
             <div slot="footer">
-                <el-button type="primary" @click="destroy">{{ $t('action.confirm') }}</el-button>
+                <el-button type="danger" @click="destroy">{{ $t('action.confirm') }}</el-button>
                 <el-button @click="dialog.visible.destroy = false">{{ $t('action.cancel') }}</el-button>
             </div>
         </el-dialog>

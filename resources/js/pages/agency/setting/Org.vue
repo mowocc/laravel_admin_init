@@ -75,7 +75,7 @@
             <div class="text-center" v-html="$t('confirm.tree-delete', { name: nodeCache.data.name })"></div>
             <div class="text-center" v-html="$t('confirm.tree-delete-org')"></div>
             <div slot="footer">
-                <el-button type="primary" @click="treeNodeDestroy">{{ $t('action.confirm') }}</el-button>
+                <el-button type="danger" @click="treeNodeDestroy">{{ $t('action.confirm') }}</el-button>
                 <el-button @click="dialog.visible.destroy = false">{{ $t('action.cancel') }}</el-button>
             </div>
         </el-dialog>
