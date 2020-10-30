@@ -151,7 +151,7 @@ return [
         'admin' => [
             'update' => [
                 'attributes' => [
-                    'name' => 'Name'
+                    'name' => 'name'
                 ]
             ],
             'update-password' => [
@@ -176,7 +176,7 @@ return [
                 'user' => [
                     'store-update' => [
                         'attributes' => [
-                            'name' => 'Name'
+                            'name' => 'name'
                         ],
                         'messages' => [
                             'password.required_without' => 'The :attribute field is required.'
@@ -190,39 +190,39 @@ return [
                 'language' => [
                     'store-update' => [
                         'attributes' => [
-                            'name' => 'Language',
-                            'lang' => 'Lang Code',
+                            'name' => 'language',
+                            'lang' => 'lang code',
                         ]
                     ]
                 ],
                 'server' => [
                     'store-update' => [
                         'attributes' => [
-                            'mysql_agency.host' => 'Host',
-                            'mysql_agency.port' => 'Port',
-                            'mysql_agency.database' => 'Database',
-                            'mysql_agency.username' => 'Username',
-                            'mysql_agency.password' => 'Password'
+                            'mysql_agency.host' => 'host',
+                            'mysql_agency.port' => 'port',
+                            'mysql_agency.database' => 'database',
+                            'mysql_agency.username' => 'username',
+                            'mysql_agency.password' => 'password'
                         ]
                     ]
                 ],
                 'menu' => [
                     'store-update' => [
                         'attributes' => [
-                            'sort' => 'Sort',
-                            'icon' => 'Font Icon',
-                            'route_path' => 'Route Path',
-                            'route_name' => 'Route Name'
+                            'sort' => 'sort',
+                            'icon' => 'font icon',
+                            'route_path' => 'route path',
+                            'route_name' => 'route name'
                         ]
                     ]
                 ],
                 'menu-action' => [
                     'store-update' => [
                         'attributes' => [
-                            'actions.system.*.name' => 'Name',
-                            'actions.system.*.action' => 'Action',
-                            'actions.custom.*.name' => 'Name',
-                            'actions.custom.*.action' => 'Action'
+                            'actions.system.*.name' => 'name',
+                            'actions.system.*.action' => 'action',
+                            'actions.custom.*.name' => 'name',
+                            'actions.custom.*.action' => 'action'
                         ]
                     ]
                 ]
@@ -230,7 +230,7 @@ return [
             'user' => [
                 'store-update' => [
                     'attributes' => [
-                        'name' => 'Name'
+                        'name' => 'name'
                     ],
                     'messages' => [
                         'password.required_without' => 'The :attribute field is required.'
