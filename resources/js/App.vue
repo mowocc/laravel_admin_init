@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-aside :class="{ 'drag-container-move' : dragStartStatus }" :width="asideWidth + 'px'">
+        <el-aside :width="asideWidth + 'px'" :class="{ 'drag-container-move' : dragStartStatus }">
             <div class="aside-logo">
                 <img class="logo-img" src="/img/logo/logo.png"/>
                 <span class="site-name" :title="$t('sitename')">{{ $t('sitename') }}</span>
