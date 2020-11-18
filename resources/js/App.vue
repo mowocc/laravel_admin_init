@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-aside>
+        <el-aside :class="{ 'drag-container-move' : dragStartStatus }" :width="asideWidth + 'px'">
             <div class="aside-logo">
                 <img class="logo-img" src="/img/logo/logo.png"/>
                 <span class="site-name" :title="$t('sitename')">{{ $t('sitename') }}</span>
@@ -9,7 +9,8 @@
                 <component-layout-menu></component-layout-menu>
             </div>
         </el-aside>
-        <el-container>
+        <div class="drag-line" :style="{ left : asideWidth + 'px' }" @mousedown="mouseDown"></div>
+        <el-container :class="{ 'drag-container-move' : dragStartStatus }">
             <el-header>
                 <div class="header-content">
                     <div class="header-content-app">
@@ -34,7 +35,10 @@
 <script>
     export default {
         data() {
-            return {}
+            return {
+                asideWidth: 180,
+                dragStartStatus: false,
+            }
         },
         created() {
             // 进度条[开始](第一次启动页面)
@@ -66,12 +70,55 @@
             // 进度条[结束](路由不存在时)
             this.$Progress.finish()
         },
+        methods: {
+            // 事件处理【鼠标按下】【局部】
+            mouseDown($event) {
+                // 标记开始拖动
+                this.dragStartStatus = true;
+                // 添加鼠标抬起事件【全局】
+                document.addEventListener('mouseup', this.mouseUp)
+                // 添加鼠标移动事件【全局】
+                document.addEventListener('mousemove', this.mouseMove)
+            },
+            // 事件处理【鼠标抬起】
+            mouseUp($event) {
+                // 删除鼠标移动事件【全局】
+                document.removeEventListener('mousemove', this.mouseMove)
+                // 删除鼠标抬起事件【全局】
+                document.removeEventListener('mouseup', this.mouseUp)
+                // 标记结束拖动
+                this.dragStartStatus = false;
+            },
+            // 事件处理【鼠标移动】
+            mouseMove($event) {
+                if (180 <= $event.screenX && $event.screenX <= 500) {
+                    this.asideWidth = $event.screenX;
+                }
+            },
+        },
     }
 </script>
 
 <style lang="scss">
+    .drag-line {
+        background-color: transparent;
+        cursor: w-resize;
+        height: 100vh;
+        width: 4px;
+        margin-left: -2px;
+        position: fixed;
+        bottom: 0;
+        top: 0;
+        z-index: 11;
+    }
+
+    .drag-container-move {
+        user-select: none;
+        cursor: w-resize;
+    }
+
     .el-aside {
-        width: $layout-aside-width !important;
+        /*width: $layout-aside-width !important;*/
         background-color: $layout-background-color;
         background-image: linear-gradient(0deg, $layout-background-color-min, $layout-background-color-max);
     }
