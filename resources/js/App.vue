@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-aside :width="asideWidth + 'px'" :class="{ 'drag-container-move' : dragStartStatus }">
+        <el-aside :width="asideWidth + 'px'" :class="{ 'drag-move' : dragStartStatus }">
             <div class="aside-logo">
                 <img class="logo-img" src="/img/logo/logo.png"/>
                 <span class="site-name" :title="$t('sitename')">{{ $t('sitename') }}</span>
@@ -10,7 +10,7 @@
             </div>
         </el-aside>
         <div class="drag-line" :style="{ left : asideWidth + 'px' }" @mousedown="mouseDown"></div>
-        <el-container :class="{ 'drag-container-move' : dragStartStatus }">
+        <el-container :class="{ 'drag-move' : dragStartStatus }">
             <el-header>
                 <div class="header-content">
                     <div class="header-content-app">
@@ -112,7 +112,7 @@
         z-index: 11;
     }
 
-    .drag-container-move {
+    .drag-move {
         user-select: none;
         cursor: w-resize;
     }
