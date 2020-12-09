@@ -104,7 +104,7 @@ trait Paginate
      */
     protected function getPaginatePageSize($request)
     {
-        return $this->pageSize ?: (int)($request->input('pageSize', 10) ?: 10);
+        return $this->pageSize ?: (int)($request->input('page_size', 10) ?: 10);
     }
 
     /**
